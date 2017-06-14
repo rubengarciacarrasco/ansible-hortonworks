@@ -1,0 +1,7 @@
+  - name: Configure {{ name }} Security group
+    os_security_group_rule:
+      security_group: "{{ name }}"
+      protocol: "{{ protocol }}"
+      port_range_min: "{{ start_port }}"
+      port_range_max:  "{{ end_port }}"
+      remote_ip_prefix: "{{ remote_ip_prefix | default('0.0.0.0/0') }}"

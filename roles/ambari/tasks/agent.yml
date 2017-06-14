@@ -1,0 +1,25 @@
+---
+- name: Add Ambari repository 
+  get_url:
+    url: "{{ AMBARI_REPO | default( '{{ AMBARI_DEFAULT_REPO }}' ) }}"
+    dest: /etc/yum.repos.d/ambari.repo
+    mode: 0644
+
+- name: Install Ambari Agent
+  yum:
+    name: ambari-agent
+    state: latest
+  register: ambari-agent
+
+- name: Configure Ambari Agents
+  template: 
+    src: ambari-agent.ini.j2
+    dest: "/etc/ambari-agent/conf/ambari-agent.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart Ambari Agents
+  service: 
+    name: ambari-agent
+    state: restarted

@@ -1,0 +1,56 @@
+{
+  "default_password" : "{{ AMBARI_PASS }}",
+  "host_groups" : [
+    {
+      "name" : "AMBARI",
+      "hosts" : [
+{% for node in groups['ambari'] %}
+        {
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+        }
+{% enfor %}
+      ]
+    },
+    {
+      "name" : "NAMENODE",
+      "hosts" : [
+{% for node in groups['namenode'] %}
+        {
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+        }
+{% enfor %}
+      ]
+    },
+    {
+      "name" : "EDGENODE",
+      "hosts" : [
+{% for node in groups['edgenode'] %}
+        {
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+        }
+{% enfor %}
+      ]
+    },
+    {
+      "name" : "SNAMENODE",
+      "hosts" : [
+{% for node in groups['snamenode'] %}
+        {
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+        }
+{% enfor %}
+      ]
+    },
+    {
+      "name" : "DATANODE",
+      "hosts" : [
+{% for node in groups['datanode'] %}
+        {
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+        },
+{% enfor %}
+      ]
+    }
+  ],
+  "blueprint" : "{{ AMBARI_blueprintname }}"
+}

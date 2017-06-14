@@ -1,0 +1,32 @@
+---
+- name: Add Ambari repository 
+  get_url:
+    url: "{{ AMBARI_REPO | default( '{{ AMBARI_DEFAULT_REPO }}' ) }}"
+    dest: /etc/yum.repos.d/ambari.repo
+    mode: 0644
+
+- name: Install Ambari Server in Ambari Node
+  yum:
+    name: ambari-server
+    state: latest
+  register: ambari-installation
+
+- name: Setup Ambari Server
+  shell: ambari-server setup -s
+  when: ambari-installation.changed
+
+- name: Start Ambari Server
+  service:
+    name: ambari-server
+    state: restarted
+  when: ambari-installation.changed
+
+- name: Confirm Ambari Server is up
+  wait_for: 
+    port: 8080
+    delay: 10
+    state: started
+  when: ambari-installation.changed
+
+#- debug:
+#    msg: 'Ambari Server installed in "{{ inventory_hostname }}". Access it with http://{{ hostvars[].default_ipv4.address }}'

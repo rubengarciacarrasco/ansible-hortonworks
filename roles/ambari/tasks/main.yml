@@ -1,0 +1,6 @@
+# Install ambari agent in all cluster nodes with ambari server endpoint
+- include: agent.yml
+
+# Install Ambari Server
+- include: server.yml
+  when: inventory_hostname in groups['ambari']

@@ -1,0 +1,7 @@
+  - name: Create {{ router_name }} router
+    os_router:
+      state: present
+      name: "{{ router_name }}_router"
+      network: "{{ external_net_name }}"
+      interfaces:
+        - "{{ net_name }}_subnet"

@@ -1,0 +1,5 @@
+- name: Start Docker Engine
+  service: name=docker enable=yes state=started
+
+- name: Restart Ambari-agent
+  service: name=ambari-agent enable=yes state=restarted

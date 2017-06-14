@@ -1,0 +1,52 @@
+{
+  "default_password" : "ambari",
+  "host_groups" : [
+    {
+      "name" : "host_group_1",
+      "hosts" : [
+        {
+          "fqdn" : "edge-node-1.novalocal"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_2",
+      "hosts" : [
+        {
+          "fqdn" : "hdp-node-1.novalocal"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_4",
+      "hosts" : [
+        {
+          "fqdn" : "hdp-node-3.novalocal"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_3",
+      "hosts" : [
+        {
+          "fqdn" : "hdp-node-2.novalocal"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_5",
+      "hosts" : [
+        {
+          "fqdn" : "hdp-node-4.novalocal"
+    },
+    {
+          "fqdn" : "hdp-node-5.novalocal"
+    },
+    {
+          "fqdn" : "hdp-node-6.novalocal"
+        }
+      ]
+    }
+  ],
+  "blueprint" : "inndo"
+}

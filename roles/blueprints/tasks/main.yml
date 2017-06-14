@@ -1,0 +1,51 @@
+
+- name: Verify hosts if registered in Ambari Server
+  uri:
+    url: http://{{ AMBARI_HOST }}:8080/api/v1/hosts
+    method: GET
+    HEADER_X-Requested-By: ambari
+    user: '{{ AMBARI_USER }}'
+    password: '{{ AMBARI_PASS }}'
+    force_basic_auth: yes
+    status_code: 200
+
+- name: Register blueprint in Ambari Server
+  uri: 
+    url: http://{{ AMBARI_HOST }}:8080/api/v1/blueprints/{{ AMBARI_blueprintname }}
+    method: POST
+    HEADER_X-Requested-By: "ambari"
+    user: '{{ AMBARI_USER }}'
+    password: '{{ AMBARI_PASS }}'
+    HEADER_Content-Type: "application/x-www-form-urlencoded"
+    HEADER_Accept: "text/plain"
+    HEADER_Accept-Encoding: "&lt;compress | gzip | deflate | identity&gt;"
+    HEADER_Accept-Language: "en-US"
+    body: "{{ lookup('template','{{ AMBARI_blueprintfile }}') }}"
+    force_basic_auth: yes
+    body_format: json
+    status_code: 
+      - 201
+      - 409
+
+- name: Confirm blueprint registry
+  uri:
+    url: http://{{ AMBARI_HOST }}:8080/api/v1/blueprints/{{ AMBARI_blueprintname }}
+    method: GET
+    HEADER_X-Requested-By: "ambari"
+    user: '{{ AMBARI_USER }}'
+    password: '{{ AMBARI_PASS }}'
+    force_basic_auth: yes
+    status_code: 200
+
+- name: Submit Cluster Structure to Ambari Server
+  uri:
+    url: http://{{ AMBARI_HOST }}:8080/api/v1/clusters/{{ AMBARI_clustername }}
+    method: POST
+    HEADER_X-Requested-By: "ambari"
+    user: '{{ AMBARI_USER }}'
+    password: '{{ AMBARI_PASS }}'
+    body: "{{ lookup('template','{{ AMBARI_clusterfile }}') }}"
+    force_basic_auth: yes
+    status_code: 202
+    body_format: json
+

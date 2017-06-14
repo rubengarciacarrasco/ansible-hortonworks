@@ -1,0 +1,81 @@
+---
+- name: Disable SElinux during deployment
+  selinux: 
+    state: disabled
+  register: selinux
+
+- name: Disable default route in eth0
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    line: 'DEFROUTE="no"'
+    state: present
+  register: gatewaydev
+
+- name: Restart network if modified /etc/sysconfig/network
+  service: 
+    name: network
+    state: restarted
+  when: gatewaydev.changed
+
+- name: Remove old entries in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "{{ item }}"
+    state: absent
+  tags: etchosts
+  with_items:
+  - '.*localdomain'
+  - '.*novalocal'
+  - '.*openstacklocal'
+
+- name: Update /etc/hosts
+  lineinfile:
+    dest: /etc/hosts 
+    regexp: '^[0-9\.]+ {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.novalocal.openstacklocal$'
+    line: "{{ hostvars[item].ansible_eth0.ipv4.address }} {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.localdomain {{ hostvars[item].ansible_hostname }}.openstacklocal"
+    state: present
+  when: 
+    - hostvars[item].ansible_eth0.ipv4.address is defined
+#    - gatewaydev.changed
+  with_items: "{{ groups['all'] }}"
+  tags: etchosts
+
+- name: Add external yum repositories
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgkey: "{{ item.gpgkey }}"
+  with_items:
+#    - {
+#        name: "epel",
+#        description: "EPEL YUM repo",
+#        baseurl: "https://download.fedoraproject.org/pub/epel/$releasever/$basearch/",
+#        gpgkey: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
+#      }
+    - {
+        name: "docker",
+        description: "docker repo",
+        baseurl: "https://yum.dockerproject.org/repo/main/centos/7",
+        gpgkey: "https://yum.dockerproject.org/gpg"
+      }
+
+- name: Add internal EPG/dSN yum repositories
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+  with_items:
+    - {
+        name: "rhel7",
+        description: "RHEL7-hi.mirror Repository",
+        baseurl: "http://repos.hi.inet/redhat/rhel7_dsn-x86_64/RPMS.all/",
+        gpgcheck: no
+      }
+    - {
+        name: "epel",
+        description: "Epel-hi.mirror Repository",
+        baseurl: "http://repos.hi.inet/redhat/rhel7_dsn-x86_64/RPMS.epel/",
+        gpgcheck: no
+      }

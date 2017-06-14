@@ -1,0 +1,11 @@
+MAPEO BLUEPRINT - CLUSTER
+
+host_group_2 = DATANODE
+
+host_group_1 = AMBARI
+
+host_group_3 = EDGENODE
+
+host_group_4 = NAMENODE
+
+host_group_5 = SNAMENODE

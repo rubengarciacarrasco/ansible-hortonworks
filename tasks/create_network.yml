@@ -1,0 +1,15 @@
+  - name: Create {{ net_name }} network
+    os_network:
+      state: present
+      name: "{{ net_name }}"
+
+  - name: Create {{ net_name }} subnet
+    os_subnet:
+      state: present
+      network_name: "{{ net_name }}"
+      name: "{{ net_name }}_subnet"
+      cidr: "{{ cidr }}"
+      allocation_pool_start: "{{ pool_start }}"
+      allocation_pool_end: "{{ pool_end }}"
+      dns_nameservers: "{{ dns_servers }}"
+      host_routes: "{{ network_routes }}"

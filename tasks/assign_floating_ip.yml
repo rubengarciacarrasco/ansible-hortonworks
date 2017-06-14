@@ -1,0 +1,16 @@
+# Assign a static floating IP address to a network interface of a specific server.
+# It verifies if the floating IP was not assigned yet.
+#
+# Input parameters:
+# - os_vm_name: Name of the server to assign the floating IP
+# - os_vm_network: Name of the network where the floating IP is assigned (e.g. private_external)
+# - os_vm_floating_ip: Floating IP address
+
+- os_server_facts:
+    server: "{{ os_vm_basename }}"
+
+- os_floating_ip:
+    server: "{{ os_vm_basename }}"
+    fixed_address: "{{ openstack.networks[os_vm_network][0] }}"
+    floating_ip_address: "{{ os_vm_floating_ip }}"
+  when: "'{{ os_vm_floating_ip }}' not in openstack.networks[os_vm_network]"
