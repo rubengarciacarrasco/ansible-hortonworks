@@ -21,14 +21,6 @@
       }
     },
     {
-      "zeppelin-log4j-properties" : {
-        "properties_attributes" : { },
-        "properties" : {
-          "log4j_properties_content" : "\nlog4j.rootLogger = INFO, dailyfile\nlog4j.appender.stdout = org.apache.log4j.ConsoleAppender\nlog4j.appender.stdout.layout = org.apache.log4j.PatternLayout\nlog4j.appender.stdout.layout.ConversionPattern=%5p [%d] ({%t} %F[%M]:%L) - %m%n\nlog4j.appender.dailyfile.DatePattern=.yyyy-MM-dd\nlog4j.appender.dailyfile.Threshold = INFO\nlog4j.appender.dailyfile = org.apache.log4j.DailyRollingFileAppender\nlog4j.appender.dailyfile.File = ${zeppelin.log.file}\nlog4j.appender.dailyfile.layout = org.apache.log4j.PatternLayout\nlog4j.appender.dailyfile.layout.ConversionPattern=%5p [%d] ({%t} %F[%M]:%L) - %m%n"
-        }
-      }
-    },
-    {
       "zoo.cfg" : {
         "properties_attributes" : { },
         "properties" : {
@@ -214,7 +206,7 @@
           }
         },
         "properties" : {
-          "fs.defaultFS" : "hdfs://%HOSTGROUP::host_group_4%:8020",
+          "fs.defaultFS" : "hdfs://%HOSTGROUP::NAMENODE%:8020",
           "ipc.server.tcpnodelay" : "true",
           "mapreduce.jobtracker.webinterface.trusted" : "false",
           "hadoop.security.auth_to_local" : "DEFAULT",
@@ -226,15 +218,15 @@
           "hadoop.security.authorization" : "false",
           "ipc.client.connection.maxidletime" : "30000",
           "hadoop.proxyuser.hcat.groups" : "*",
-          "hadoop.proxyuser.hive.hosts" : "%HOSTGROUP::host_group_1%",
+          "hadoop.proxyuser.hive.hosts" : "%HOSTGROUP::AMBARI%",
           "hadoop.proxyuser.root.hosts" : "ambari-1.localdomain",
           "ha.failover-controller.active-standby-elector.zk.op.retries" : "120",
           "hadoop.security.authentication" : "simple",
           "hadoop.proxyuser.hdfs.hosts" : "*",
           "ipc.client.connect.max.retries" : "50",
           "io.file.buffer.size" : "131072",
-          "hadoop.proxyuser.oozie.hosts" : "%HOSTGROUP::host_group_1%",
-          "hadoop.proxyuser.hcat.hosts" : "%HOSTGROUP::host_group_1%",
+          "hadoop.proxyuser.oozie.hosts" : "%HOSTGROUP::AMBARI%",
+          "hadoop.proxyuser.hcat.hosts" : "%HOSTGROUP::AMBARI%",
           "hadoop.proxyuser.oozie.groups" : "*",
           "net.topology.script.file.name" : "/etc/hadoop/conf/topology_script.py",
           "io.compression.codecs" : "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec",
@@ -395,7 +387,7 @@
       "oozie-site" : {
         "properties_attributes" : { },
         "properties" : {
-          "oozie.base.url" : "http://%HOSTGROUP::host_group_1%:11000/oozie",
+          "oozie.base.url" : "http://%HOSTGROUP::AMBARI%:11000/oozie",
           "oozie.service.URIHandlerService.uri.handlers" : "org.apache.oozie.dependency.FSURIHandler,org.apache.oozie.dependency.HCatURIHandler",
           "oozie.service.HadoopAccessorService.kerberos.enabled" : "false",
           "oozie.action.retry.interval" : "30",
@@ -511,16 +503,6 @@
       "ranger-knox-security" : {
         "properties_attributes" : { },
         "properties" : { }
-      }
-    },
-    {
-      "zeppelin-logsearch-conf" : {
-        "properties_attributes" : { },
-        "properties" : {
-          "component_mappings" : "ZEPPELIN_MASTER:zeppelin",
-          "content" : "\n{\n  \"input\":[\n    {\n      \"type\":\"zeppelin\",\n      \"rowtype\":\"service\",\n      \"path\":\"{{default('/configurations/zeppelin-env/zeppelin_log_dir', '/var/log/zeppelin')}}/zeppelin-zeppelin-*.log\"\n    }\n   ],\n  \"filter\":[\n    {\n      \"filter\":\"grok\",\n      \"conditions\":{\n        \"fields\":{\n          \"type\":[\n            \"zeppelin\"\n          ]\n         }\n       },\n      \"log4j_format\":\"\",\n      \"multiline_pattern\":\"^(%{SPACE}%{LOGLEVEL:level}%{SPACE}\\\\[%{TIMESTAMP_ISO8601:logtime}\\\\])\",\n      \"message_pattern\":\"(?m)^%{SPACE}%{LOGLEVEL:level}%{SPACE}\\\\[%{TIMESTAMP_ISO8601:logtime}\\\\]%{SPACE}\\\\(\\\\{{\"{\"}}%{DATA:thread_name}\\\\{{\"}\"}}%{SPACE}%{JAVAFILE:file}\\\\[%{JAVAMETHOD:method}\\\\]:%{INT:line_number}\\\\)%{SPACE}-%{SPACE}%{GREEDYDATA:log_message}\",\n      \"post_map_values\":{\n        \"logtime\":{\n          \"map_date\":{\n            \"target_date_pattern\":\"yyyy-MM-dd HH:mm:ss,SSS\"\n          }\n         }\n       }\n     }\n   ]\n }",
-          "service_name" : "Zeppelin"
-        }
       }
     },
     {
@@ -807,7 +789,7 @@
           "hive.vectorized.execution.mapjoin.native.enabled" : "true",
           "hive.metastore.event.listeners" : "",
           "hive.server2.tez.default.queues" : "default",
-          "hive.llap.zk.sm.connectionString" : "%HOSTGROUP::host_group_3%:2181,%HOSTGROUP::host_group_1%:2181,s%HOSTGROUP::host_group_4%:2181",
+          "hive.llap.zk.sm.connectionString" : "%HOSTGROUP::EDGENODE%:2181,%HOSTGROUP::AMBARI%:2181,s%HOSTGROUP::NAMENODE%:2181",
           "hive.server2.tez.sessions.custom.queue.allowed" : "ignore",
           "hive.server2.tez.sessions.per.default.queue" : "1",
           "hive.server2.webui.use.ssl" : "false",
@@ -1159,8 +1141,8 @@
           "dfs.namenode.avoid.read.stale.datanode" : "true",
           "dfs.journalnode.http-address" : "0.0.0.0:8480",
           "nfs.file.dump.dir" : "/tmp/.hdfs-nfs",
-          "dfs.namenode.rpc-address" : "%HOSTGROUP::host_group_4%:8020",
-          "dfs.namenode.https-address" : "%HOSTGROUP::host_group_4%:50470",
+          "dfs.namenode.rpc-address" : "%HOSTGROUP::NAMENODE%:8020",
+          "dfs.namenode.https-address" : "%HOSTGROUP::NAMENODE%:50470",
           "dfs.encrypt.data.transfer.cipher.suites" : "AES/CTR/NoPadding",
           "dfs.client.read.shortcircuit.streams.cache.size" : "4096",
           "dfs.hosts.exclude" : "/etc/hadoop/conf/dfs.exclude",
@@ -1182,7 +1164,7 @@
           "dfs.replication.max" : "50",
           "dfs.client.read.shortcircuit" : "true",
           "dfs.webhdfs.enabled" : "true",
-          "dfs.namenode.http-address" : "%HOSTGROUP::host_group_4%:50070",
+          "dfs.namenode.http-address" : "%HOSTGROUP::NAMENODE%:50070",
           "dfs.namenode.name.dir" : "/hadoop/hdfs/namenode",
           "dfs.namenode.avoid.write.stale.datanode" : "true",
           "dfs.datanode.https.address" : "0.0.0.0:50475",
@@ -1201,7 +1183,7 @@
           "dfs.namenode.write.stale.datanode.ratio" : "1.0f",
           "dfs.namenode.name.dir.restore" : "true",
           "dfs.heartbeat.interval" : "3",
-          "dfs.namenode.secondary.http-address" : "s%HOSTGROUP::host_group_4%:50090",
+          "dfs.namenode.secondary.http-address" : "s%HOSTGROUP::NAMENODE%:50090",
           "dfs.namenode.checkpoint.txns" : "1000000",
           "dfs.journalnode.edits.dir" : "/hadoop/hdfs/journalnode",
           "dfs.support.append" : "true",
@@ -1224,10 +1206,10 @@
       "yarn-site" : {
         "properties_attributes" : { },
         "properties" : {
-          "yarn.resourcemanager.zk-address" : "%HOSTGROUP::host_group_3%:2181,s%HOSTGROUP::host_group_4%:2181,%HOSTGROUP::host_group_1%:2181",
+          "yarn.resourcemanager.zk-address" : "%HOSTGROUP::EDGENODE%:2181,s%HOSTGROUP::NAMENOD%:2181,%HOSTGROUP::AMBARI%:2181",
           "yarn.nodemanager.container-monitor.interval-ms" : "3000",
           "yarn.timeline-service.entity-group-fs-store.active-dir" : "/ats/active/",
-          "yarn.log.server.web-service.url" : "http://%HOSTGROUP::host_group_3%:8188/ws/v1/applicationhistory",
+          "yarn.log.server.web-service.url" : "http://%HOSTGROUP::EDGENODE%:8188/ws/v1/applicationhistory",
           "yarn.nodemanager.linux-container-executor.group" : "hadoop",
           "yarn.client.failover-proxy-provider" : "org.apache.hadoop.yarn.client.RequestHedgingRMFailoverProxyProvider",
           "yarn.application.classpath" : "/etc/hadoop/conf,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*",
@@ -1235,10 +1217,10 @@
           "yarn.timeline-service.entity-group-fs-store.cleaner-interval-seconds" : "3600",
           "yarn.nodemanager.remote-app-log-dir-suffix" : "logs",
           "yarn.nodemanager.address" : "0.0.0.0:45454",
-          "yarn.resourcemanager.webapp.address" : "%HOSTGROUP::host_group_4%:8088",
+          "yarn.resourcemanager.webapp.address" : "%HOSTGROUP::NAMENODE%:8088",
           "yarn.timeline-service.leveldb-timeline-store.ttl-interval-ms" : "300000",
           "yarn.scheduler.maximum-allocation-vcores" : "1",
-          "yarn.timeline-service.address" : "%HOSTGROUP::host_group_3%:10200",
+          "yarn.timeline-service.address" : "%HOSTGROUP::EDGENODE%:10200",
           "yarn.timeline-service.enabled" : "true",
           "yarn.nodemanager.aux-services" : "mapreduce_shuffle,spark_shuffle,spark2_shuffle",
           "yarn.nodemanager.resource.cpu-vcores" : "1",
@@ -1251,9 +1233,9 @@
           "yarn.timeline-service.http-authentication.simple.anonymous.allowed" : "true",
           "yarn.resourcemanager.zk-state-store.parent-path" : "/rmstore",
           "yarn.timeline-service.leveldb-timeline-store.start-time-read-cache-size" : "10000",
-          "yarn.resourcemanager.admin.address" : "%HOSTGROUP::host_group_4%:8141",
+          "yarn.resourcemanager.admin.address" : "%HOSTGROUP::NAMENODE%:8141",
           "yarn.nodemanager.linux-container-executor.cgroups.strict-resource-usage" : "false",
-          "yarn.resourcemanager.resource-tracker.address" : "%HOSTGROUP::host_group_4%:8025",
+          "yarn.resourcemanager.resource-tracker.address" : "%HOSTGROUP::NAMENODE%:8025",
           "yarn.nodemanager.delete.debug-delay-sec" : "0",
           "yarn.resourcemanager.fs.state-store.retry-policy-spec" : "2000, 500",
           "yarn.timeline-service.http-authentication.type" : "simple",
@@ -1279,15 +1261,15 @@
           "yarn.resourcemanager.fs.state-store.uri" : " ",
           "yarn.resourcemanager.recovery.enabled" : "true",
           "yarn.timeline-service.entity-group-fs-store.group-id-plugin-classpath" : "",
-          "yarn.resourcemanager.scheduler.address" : "%HOSTGROUP::host_group_4%:8030",
+          "yarn.resourcemanager.scheduler.address" : "%HOSTGROUP::NAMENODE%:8030",
           "yarn.timeline-service.client.fd-flush-interval-secs" : "5",
           "yarn.timeline-service.leveldb-timeline-store.start-time-write-cache-size" : "10000",
           "yarn.timeline-service.ttl-ms" : "2678400000",
           "yarn.nodemanager.health-checker.script.timeout-ms" : "60000",
           "yarn.nodemanager.aux-services.spark2_shuffle.class" : "org.apache.spark.network.yarn.YarnShuffleService",
-          "yarn.log.server.url" : "http://%HOSTGROUP::host_group_3%:19888/jobhistory/logs",
+          "yarn.log.server.url" : "http://%HOSTGROUP::EDGENODE%:19888/jobhistory/logs",
           "yarn.timeline-service.entity-group-fs-store.group-id-plugin-classes" : "org.apache.tez.dag.history.logging.ats.TimelineCachePluginImpl",
-          "yarn.resourcemanager.address" : "%HOSTGROUP::host_group_4%:8050",
+          "yarn.resourcemanager.address" : "%HOSTGROUP::NAMENODE%:8050",
           "yarn.timeline-service.recovery.enabled" : "true",
           "yarn.nodemanager.recovery.dir" : "{{yarn_log_dir_prefix}}/nodemanager/recovery-state",
           "yarn.resourcemanager.scheduler.monitor.enable" : "false",
@@ -1320,15 +1302,15 @@
           "yarn.nodemanager.log.retain-seconds" : "604800",
           "yarn.timeline-service.entity-group-fs-store.done-dir" : "/ats/done/",
           "yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage" : "90",
-          "hadoop.registry.zk.quorum" : "%HOSTGROUP::host_group_3%:2181,s%HOSTGROUP::host_group_4%:2181,%HOSTGROUP::host_group_1%:2181",
+          "hadoop.registry.zk.quorum" : "%HOSTGROUP::EDGENODE%:2181,s%HOSTGROUP::NAMENODE%:2181,%HOSTGROUP::AMBARI%:2181",
           "yarn.nodemanager.log-aggregation.roll-monitoring-interval-seconds" : "3600",
           "yarn.nodemanager.container-executor.class" : "org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor",
           "yarn.resourcemanager.nodes.exclude-path" : "/etc/hadoop/conf/yarn.exclude",
           "yarn.timeline-service.state-store-class" : "org.apache.hadoop.yarn.server.timeline.recovery.LeveldbTimelineStateStore",
           "yarn.nodemanager.bind-host" : "0.0.0.0",
-          "yarn.resourcemanager.hostname" : "%HOSTGROUP::host_group_4%",
+          "yarn.resourcemanager.hostname" : "%HOSTGROUP::NAMENODE%",
           "yarn.resourcemanager.connect.retry-interval.ms" : "15000",
-          "yarn.timeline-service.webapp.address" : "%HOSTGROUP::host_group_3%:8188",
+          "yarn.timeline-service.webapp.address" : "%HOSTGROUP::EDGENODE%:8188",
           "yarn.scheduler.minimum-allocation-mb" : "682",
           "yarn.timeline-service.entity-group-fs-store.summary-store" : "org.apache.hadoop.yarn.server.timeline.RollingLevelDBTimelineStore",
           "yarn.nodemanager.health-checker.interval-ms" : "135000",
@@ -1339,8 +1321,8 @@
           "yarn.scheduler.maximum-allocation-mb" : "2046",
           "yarn.nodemanager.vmem-check-enabled" : "false",
           "yarn.timeline-service.entity-group-fs-store.scan-interval-seconds" : "15",
-          "yarn.resourcemanager.webapp.https.address" : "%HOSTGROUP::host_group_4%:8090",
-          "yarn.timeline-service.webapp.https.address" : "%HOSTGROUP::host_group_3%:8190",
+          "yarn.resourcemanager.webapp.https.address" : "%HOSTGROUP::NAMENODE%:8090",
+          "yarn.timeline-service.webapp.https.address" : "%HOSTGROUP::EDGENODE%:8190",
           "yarn.nodemanager.resource.percentage-physical-cpu-limit" : "80",
           "yarn.nodemanager.vmem-pmem-ratio" : "2.1",
           "yarn.nodemanager.log-aggregation.compression-type" : "gz",
@@ -1685,7 +1667,7 @@
           "mapreduce.task.io.sort.mb" : "381",
           "mapreduce.cluster.administrators" : " hadoop",
           "mapreduce.reduce.shuffle.fetch.retry.timeout-ms" : "30000",
-          "mapreduce.jobhistory.address" : "%HOSTGROUP::host_group_3%:10020",
+          "mapreduce.jobhistory.address" : "%HOSTGROUP::EDGENODE%:10020",
           "mapreduce.map.sort.spill.percent" : "0.7",
           "mapreduce.map.memory.mb" : "682",
           "mapreduce.admin.reduce.child.java.opts" : "-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}",
@@ -1697,7 +1679,7 @@
           "mapreduce.framework.name" : "yarn",
           "mapreduce.reduce.shuffle.parallelcopies" : "30",
           "mapreduce.jobhistory.done-dir" : "/mr-history/done",
-          "mapreduce.jobhistory.webapp.address" : "%HOSTGROUP::host_group_3%:19888",
+          "mapreduce.jobhistory.webapp.address" : "%HOSTGROUP::EDGENODE%:19888",
           "mapreduce.reduce.shuffle.fetch.retry.enabled" : "1",
           "mapreduce.task.io.sort.factor" : "100",
           "mapreduce.jobhistory.recovery.store.leveldb.path" : "/hadoop/mapreduce/jhs",
@@ -1788,7 +1770,7 @@
           "hive.metastore.execute.setugi" : "true",
           "hive.tez.smb.number.waves" : "0.5",
           "hive.server2.authentication.spnego.keytab" : "HTTP/_HOST@EXAMPLE.COM",
-          "hive.zookeeper.quorum" : "%HOSTGROUP::host_group_3%:2181,s%HOSTGROUP::host_group_4%:2181,%HOSTGROUP::host_group_1%:2181",
+          "hive.zookeeper.quorum" : "%HOSTGROUP::EDGENODE%:2181,s%HOSTGROUP::NAMENODE%:2181,%HOSTGROUP::AMBARI%:2181",
           "hive.mapjoin.bucket.cache.size" : "10000",
           "hive.metastore.kerberos.principal" : "hive/_HOST@EXAMPLE.COM",
           "hive.tez.auto.reducer.parallelism" : "true",
@@ -1855,8 +1837,8 @@
           "hive.metastore.connect.retries" : "24",
           "hive.optimize.reducededuplication.min.reducer" : "4",
           "hive.tez.input.format" : "org.apache.hadoop.hive.ql.io.HiveInputFormat",
-          "hive.cluster.delegation.token.store.zookeeper.connectString" : "%HOSTGROUP::host_group_3%:2181,s%HOSTGROUP::host_group_4%:2181,%HOSTGROUP::host_group_1%:2181",
-          "hive.metastore.uris" : "thrift://%HOSTGROUP::host_group_3%:9083",
+          "hive.cluster.delegation.token.store.zookeeper.connectString" : "%HOSTGROUP::EDGENODE%:2181,s%HOSTGROUP::NAMENODE%:2181,%HOSTGROUP::AMBARI%:2181",
+          "hive.metastore.uris" : "thrift://%HOSTGROUP::EDGENODE%:9083",
           "hive.server2.max.start.attempts" : "5",
           "hive.exec.dynamic.partition.mode" : "strict",
           "hive.server2.thrift.max.worker.threads" : "500",
@@ -1878,7 +1860,7 @@
           "hive.server2.tez.sessions.per.default.queue" : "1",
           "hive.server2.thrift.http.port" : "10001",
           "hive.server2.logging.operation.log.location" : "/tmp/hive/operation_logs",
-          "javax.jdo.option.ConnectionURL" : "jdbc:mysql://%HOSTGROUP::host_group_1%/hive?createDatabaseIfNotExist=true",
+          "javax.jdo.option.ConnectionURL" : "jdbc:mysql://%HOSTGROUP::AMBARI%/hive?createDatabaseIfNotExist=true",
           "hive.map.aggr.hash.min.reduction" : "0.5",
           "hive.merge.size.per.task" : "256000000",
           "hive.merge.smallfiles.avgsize" : "16000000",
@@ -1977,7 +1959,7 @@
       "webhcat-site" : {
         "properties_attributes" : { },
         "properties" : {
-          "templeton.zookeeper.hosts" : "%HOSTGROUP::host_group_3%:2181,s%HOSTGROUP::host_group_4%:2181,%HOSTGROUP::host_group_1%:2181",
+          "templeton.zookeeper.hosts" : "%HOSTGROUP::EDGENODE%:2181,s%HOSTGROUP::NAMENODE%:2181,%HOSTGROUP::AMBARI%:2181",
           "webhcat.proxyuser.root.groups" : "*",
           "webhcat.proxyuser.root.hosts" : "ambari-1.localdomain",
           "templeton.hadoop.queue.name" : "default",
@@ -1985,7 +1967,7 @@
           "templeton.hive.extra.files" : "/usr/hdp/${hdp.version}/tez/conf/tez-site.xml,/usr/hdp/${hdp.version}/tez,/usr/hdp/${hdp.version}/tez/lib",
           "templeton.hcat.home" : "hive.tar.gz/hive/hcatalog",
           "templeton.override.enabled" : "false",
-          "templeton.hive.properties" : "hive.metastore.local=false,hive.metastore.uris=thrift://%HOSTGROUP::host_group_3%:9083,hive.metastore.sasl.enabled=false,hive.metastore.execute.setugi=true",
+          "templeton.hive.properties" : "hive.metastore.local=false,hive.metastore.uris=thrift://%HOSTGROUP::EDGENODE%:9083,hive.metastore.sasl.enabled=false,hive.metastore.execute.setugi=true",
           "templeton.python" : "${env.PYTHON_CMD}",
           "templeton.storage.class" : "org.apache.hive.hcatalog.templeton.tool.ZooKeeperStorage",
           "templeton.streaming.jar" : "hdfs:///hdp/apps/${hdp.version}/mapreduce/hadoop-streaming.jar",
@@ -2238,7 +2220,7 @@
         }
       ],
       "configurations" : [ ],
-      "name" : "host_group_2",
+      "name" : "DATANODE",
       "cardinality" : "5"
     },
     {
@@ -2304,9 +2286,6 @@
           "name" : "MYSQL_SERVER"
         },
         {
-          "name" : "ZEPPELIN_MASTER"
-        },
-        {
           "name" : "PIG"
         },
         {
@@ -2326,7 +2305,7 @@
         }
       ],
       "configurations" : [ ],
-      "name" : "host_group_1",
+      "name" : "AMBARI",
       "cardinality" : "1"
     },
     {
@@ -2348,7 +2327,7 @@
         }
       ],
       "configurations" : [ ],
-      "name" : "host_group_4",
+      "name" : "NAMENODE",
       "cardinality" : "1"
     },
     {
@@ -2421,7 +2400,7 @@
         }
       ],
       "configurations" : [ ],
-      "name" : "host_group_3",
+      "name" : "EDGENODE",
       "cardinality" : "1"
     },
     {
@@ -2440,7 +2419,7 @@
         }
       ],
       "configurations" : [ ],
-      "name" : "host_group_5",
+      "name" : "SNAMENODE",
       "cardinality" : "1"
     }
   ],
@@ -2478,7 +2457,7 @@
     }
   ],
   "Blueprints" : {
-    "stack_name" : "HDP",
+    "stack_name" : "{{ AMBARI_clustername }}",
     "stack_version" : "2.6"
   }
 }

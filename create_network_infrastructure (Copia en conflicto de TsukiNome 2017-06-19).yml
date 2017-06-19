@@ -78,17 +78,10 @@
 
 - include: tasks/add_rule_sec_group.yml
   vars:
-    name: API
+    name: HDP
     protocol: tcp
-    start_port: 8080
-    end_port: 8080
-
-- include: tasks/add_rule_sec_group.yml
-  vars:
-    name: API
-    protocol: tcp
-    start_port: 443
-    end_port: 443
+    start_port: 1
+    end_port: 65535
 
 
 
