@@ -25,11 +25,14 @@
   roles:
     - role: blueprints
       vars:
+      - ACTION: DEPLOY
 #      - AMBARI_HOST: "{% for host in groups['ambari'] %}{{ hostvars['host']['facter_ec2_metadata']['public-ipv4'] | to_nice_yaml }}{% endfor %}"
       - AMBARI_HOST: 10.95.250.70
-      - AMBARI_USER: ansible
-      - AMBARI_PASS: ansible
+      - AMBARI_USER: admin
+      - AMBARI_PASS: admin
       - AMBARI_blueprintname: DOPG
-      - AMBARI_blueprintfile: test-blueprint.json.j2
-      - AMBARI_clustername: DOPG
-      - AMBARI_clusterfile: templates/cluster.json.j2
+      - AMBARI_blueprintfile: blueprint.json
+      - AMBARI_blueprintfile_type: file
+      - AMBARI_clustername: DSN
+      - AMBARI_clusterfile: cluster.json.j2
+      - AMBARI_clusterfile_type: template

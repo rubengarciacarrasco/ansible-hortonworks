@@ -9,24 +9,24 @@
   yum:
     name: ambari-server
     state: latest
-  register: ambari-installation
+  register: ambariinstalled
 
 - name: Setup Ambari Server
   shell: ambari-server setup -s
-  when: ambari-installation.changed
+#  when: ambariinstalled.changed
 
 - name: Start Ambari Server
   service:
     name: ambari-server
     state: restarted
-  when: ambari-installation.changed
+#  when: ambariinstalled.changed
 
 - name: Confirm Ambari Server is up
   wait_for: 
     port: 8080
     delay: 10
     state: started
-  when: ambari-installation.changed
+#  when: ambariinstalled.changed
 
 #- debug:
 #    msg: 'Ambari Server installed in "{{ inventory_hostname }}". Access it with http://{{ hostvars[].default_ipv4.address }}'

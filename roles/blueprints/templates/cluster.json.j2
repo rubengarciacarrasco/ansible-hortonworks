@@ -6,9 +6,9 @@
       "hosts" : [
 {% for node in groups['ambari'] %}
         {
-          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}.localdomain"
         }
-{% enfor %}
+{% endfor %}
       ]
     },
     {
@@ -16,9 +16,9 @@
       "hosts" : [
 {% for node in groups['namenode'] %}
         {
-          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}.localdomain"
         }
-{% enfor %}
+{% endfor %}
       ]
     },
     {
@@ -26,9 +26,9 @@
       "hosts" : [
 {% for node in groups['edgenode'] %}
         {
-          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}.localdomain"
         }
-{% enfor %}
+{% endfor %}
       ]
     },
     {
@@ -36,9 +36,9 @@
       "hosts" : [
 {% for node in groups['snamenode'] %}
         {
-          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}.localdomain"
         }
-{% enfor %}
+{% endfor %}
       ]
     },
     {
@@ -46,9 +46,9 @@
       "hosts" : [
 {% for node in groups['datanode'] %}
         {
-          "fqdn" : "{{ hostvars[node].ansible_hostname }}"
+          "fqdn" : "{{ hostvars[node].ansible_hostname }}.localdomain"
         },
-{% enfor %}
+{% endfor %}
       ]
     }
   ],
