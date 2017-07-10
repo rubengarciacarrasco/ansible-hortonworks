@@ -1,4 +1,5 @@
 {
+  {% raw %}
   "configurations" : [
     {
       "hdfs-logsearch-conf" : {
@@ -1742,6 +1743,7 @@
       }
     }
   ],
+  {% endraw %}
   "host_groups" : [
     {
       "components" : [
@@ -1760,7 +1762,7 @@
       ],
       "configurations" : [ ],
       "name" : "DATANODE",
-      "cardinality" : "5"
+      "cardinality" : "{{ DATANODE }}"
     },
     {
       "components" : [
@@ -1824,7 +1826,7 @@
       ],
       "configurations" : [ ],
       "name" : "AMBARI",
-      "cardinality" : "1"
+      "cardinality" : "{{ AMBARI_SERVER }}"
     },
     {
       "components" : [
@@ -1849,7 +1851,7 @@
       ],
       "configurations" : [ ],
       "name" : "NAMENODE",
-      "cardinality" : "1"
+      "cardinality" : "{{ NAMENODE }}"
     },
     {
       "components" : [
@@ -1913,7 +1915,7 @@
       ],
       "configurations" : [ ],
       "name" : "EDGENODE",
-      "cardinality" : "1"
+      "cardinality" : "{{ EDGENODE }}"
     },
     {
       "components" : [
@@ -1932,7 +1934,7 @@
       ],
       "configurations" : [ ],
       "name" : "SNAMENODE",
-      "cardinality" : "1"
+      "cardinality" : "{{ SNAMENODE }}"
     }
   ],
   "settings" : [

@@ -7,7 +7,7 @@
     ansible_host_groups: ambari
     image: TID-RH7-2NIC.20160503
     deployment_group: ambari
-    count: 1
+    count: "{{ AMBARI_SERVER | default(1) }}"
 
 - include: tasks/create_instance.yml
   vars:
@@ -17,7 +17,7 @@
     ansible_host_groups: edgenode
     image: TID-RH7-2NIC.20160503
     deployment_group: edgenode
-    count: 1
+    count: "{{ EDGENODE | default(1) }}"
 
 - include: tasks/create_instance.yml
   vars:
@@ -27,7 +27,7 @@
     ansible_host_groups: namenode
     image: TID-RH7-2NIC.20160503
     deployment_group: namenode
-    count: 1
+    count: "{{ NAMENODE | default(1) }}"
 
 - include: tasks/create_instance.yml
   vars:
@@ -37,7 +37,7 @@
     ansible_host_groups: snamenode
     image: TID-RH7-2NIC.20160503
     deployment_group: snamenode
-    count: 1
+    count: "{{ SNAMENODE | default(1) }}"
 
 - include: tasks/create_instance.yml
   vars:
@@ -47,4 +47,4 @@
     ansible_host_groups: datanode
     image: TID-RH7-2NIC.20160503
     deployment_group: datanode
-    count: 5
+    count: "{{ DATANODE | default(5) }}"

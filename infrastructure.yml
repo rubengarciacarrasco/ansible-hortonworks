@@ -8,6 +8,12 @@
   tasks:
   - include: create_network_infrastructure.yml
     tags: networks
+    vars:
+    - AMBARI_SERVER: 1
+    - EDGENODE: 1
+    - NAMENODE: 1
+    - SNAMENODE: 1
+    - DATANODE: 5
   - include: create_instances.yml
     tags: instances
 

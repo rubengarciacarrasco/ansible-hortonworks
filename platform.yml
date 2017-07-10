@@ -31,8 +31,13 @@
       - AMBARI_USER: admin
       - AMBARI_PASS: admin
       - AMBARI_blueprintname: DOPG
-      - AMBARI_blueprintfile: blueprint.json
+      - AMBARI_blueprintfile: blueprint.json.j2
       - AMBARI_blueprintfile_type: file
       - AMBARI_clustername: DSN
       - AMBARI_clusterfile: cluster.json.j2
       - AMBARI_clusterfile_type: template
+      - AMBARI_SERVER: 1
+      - EDGENODE: 1
+      - NAMENODE: 1
+      - SNAMENODE: 1
+      - DATANODE: 5
