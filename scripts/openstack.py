@@ -139,7 +139,7 @@ def get_host_groups_from_cloud(inventory):
             list_args['fail_on_cloud_config'] = \
                 inventory.extra_config['fail_on_errors']
     else:
-        use_hostnames = False
+        use_hostnames = True
 
     for server in inventory.list_hosts(**list_args):
 
@@ -153,13 +153,13 @@ def get_host_groups_from_cloud(inventory):
             server_ids = set()
             # Trap for duplicate results
             for server in servers:
-                server_ids.add(server['id'])
+                server_ids.add(server['name'])
             if len(server_ids) == 1 and use_hostnames:
                 append_hostvars(hostvars, groups, name, servers[0])
             else:
                 for server in servers:
                     append_hostvars(
-                        hostvars, groups, server['id'], server,
+                        hostvars, groups, server['name'], server,
                         namegroup=True)
     groups['_meta'] = {'hostvars': hostvars}
     return groups
