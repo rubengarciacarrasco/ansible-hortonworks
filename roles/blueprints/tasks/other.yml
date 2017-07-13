@@ -1,0 +1,9 @@
+---
+#- name: Get Ambari Server facts
+#  os_server_facts:
+#    server: ambari-1
+#  register: ambarifacts
+
+#- name: Show facts
+#  debug:
+#    var: ambarifacts

@@ -1,6 +1,6 @@
 - name: "{{ ansible_host_groups }} | Launch {{ count | default(1) }} instance(s)"
   os_server:
-    name: "{{ os_vm_basename | default( '{{ default_basename }}' ) }}-{{ item }}"
+    name: "{{ os_vm_basename | default( '{{ default_basename }}' ) }}{{ item }}"
     image: "{{ image | default( '{{ default_image }}' ) }}"
     flavor: "{{ flavor | default( '{{ default_flavor }}' ) }}"
     key_name: "{{ os_ssh_key_name }}"

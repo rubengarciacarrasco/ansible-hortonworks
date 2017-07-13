@@ -1,4 +1,6 @@
 ---
+- include: other.yml
+
 - include: deploy.yml
   when: ACTION == "DEPLOY"
 

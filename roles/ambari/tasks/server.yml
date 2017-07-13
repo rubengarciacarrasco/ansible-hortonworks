@@ -5,7 +5,7 @@
     dest: /etc/yum.repos.d/ambari.repo
     mode: 0644
 
-- name: Install Ambari Server in Ambari Node
+- name: Install Ambari Server package
   yum:
     name: ambari-server
     state: latest

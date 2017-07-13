@@ -56,7 +56,7 @@
 
 - include: tasks/create_security_group.yml
   vars:
-    name: Servers
+    name: CLUSTER
     description: "Security Group for Inter Servers Access"
 
 # Configure Security Groups
@@ -87,8 +87,18 @@
   vars:
     name: API
     protocol: tcp
+    start_port: 8440
+    end_port: 8440
+
+- include: tasks/add_rule_sec_group.yml
+  vars:
+    name: API
+    protocol: tcp
     start_port: 443
     end_port: 443
 
-
-
+- name: Configure Cluster Security group
+  os_security_group_rule:
+    security_group: HDP
+    protocol: tcp
+    remote_group: CLUSTER

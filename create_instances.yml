@@ -3,7 +3,7 @@
   vars:
     os_vm_basename: ambari
     flavor: TID-06CPU-08GB-20GB
-    security_groups: SSH,HDP
+    security_groups: SSH,HDP,CLUSTER,API
     ansible_host_groups: ambari
     image: TID-RH7-2NIC.20160503
     deployment_group: ambari
@@ -13,7 +13,7 @@
   vars:
     os_vm_basename: edgenode
     flavor: TID-06CPU-08GB-20GB
-    security_groups: SSH,HDP
+    security_groups: SSH,HDP,CLUSTER
     ansible_host_groups: edgenode
     image: TID-RH7-2NIC.20160503
     deployment_group: edgenode
@@ -23,7 +23,7 @@
   vars:
     os_vm_basename: namenode
     flavor: TID-02CPU-02GB-20GB
-    security_groups: SSH,HDP
+    security_groups: SSH,HDP,CLUSTER
     ansible_host_groups: namenode
     image: TID-RH7-2NIC.20160503
     deployment_group: namenode
@@ -33,7 +33,7 @@
   vars:
     os_vm_basename: snamenode
     flavor: TID-02CPU-02GB-20GB
-    security_groups: SSH,HDP
+    security_groups: SSH,HDP,CLUSTER
     ansible_host_groups: snamenode
     image: TID-RH7-2NIC.20160503
     deployment_group: snamenode
@@ -43,7 +43,7 @@
   vars:
     os_vm_basename: datanode
     flavor: TID-02CPU-04GB-20GB
-    security_groups: SSH,HDP
+    security_groups: SSH,HDP,CLUSTER
     ansible_host_groups: datanode
     image: TID-RH7-2NIC.20160503
     deployment_group: datanode

@@ -4,3 +4,4 @@ scripts/inv2.py
 roles/hue
 roles/kerberos_server
 blueprints-tests/*
+*.retry

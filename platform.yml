@@ -20,24 +20,20 @@
 
 - name: Deploy blueprint and Cluster configuration
   hosts: localhost
+  gather_facts: true
   tags: blueprint
   any_errors_fatal: true
+  vars_files:
+    - cluster.yml
   roles:
     - role: blueprints
       vars:
       - ACTION: DEPLOY
-#      - AMBARI_HOST: "{% for host in groups['ambari'] %}{{ hostvars['host']['facter_ec2_metadata']['public-ipv4'] | to_nice_yaml }}{% endfor %}"
-      - AMBARI_HOST: 10.95.250.70
+      - AMBARI_HOST: '{{ hostvars[groups[ambari][0]].[facter_ec2_metadata].[public-ipv4] }}'
+#      - AMBARI_HOST: 10.95.251.229
       - AMBARI_USER: admin
       - AMBARI_PASS: admin
       - AMBARI_blueprintname: DOPG
       - AMBARI_blueprintfile: blueprint.json.j2
-      - AMBARI_blueprintfile_type: file
       - AMBARI_clustername: DSN
       - AMBARI_clusterfile: cluster.json.j2
-      - AMBARI_clusterfile_type: template
-      - AMBARI_SERVER: 1
-      - EDGENODE: 1
-      - NAMENODE: 1
-      - SNAMENODE: 1
-      - DATANODE: 5
