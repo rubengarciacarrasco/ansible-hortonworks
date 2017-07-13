@@ -1,6 +1,5 @@
 config.yml
-scripts/inv.py
-scripts/inv2.py
+scripts/inv*
 roles/hue
 roles/kerberos_server
 blueprints-tests/*
