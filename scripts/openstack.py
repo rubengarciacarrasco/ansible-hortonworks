@@ -121,6 +121,7 @@ def get_host_groups(inventory, refresh=False):
 def append_hostvars(hostvars, groups, key, server, namegroup=False):
     hostvars[key] = dict(
         ansible_ssh_host=server['interface_ip'],
+        ansible_host=server['interface_ip'],
         openstack=server)
     for group in get_groups_from_server(server, namegroup=namegroup):
         groups[group].append(key)
@@ -138,7 +139,7 @@ def get_host_groups_from_cloud(inventory):
             list_args['fail_on_cloud_config'] = \
                 inventory.extra_config['fail_on_errors']
     else:
-        use_hostnames = False
+        use_hostnames = True
 
     for server in inventory.list_hosts(**list_args):
 
@@ -152,13 +153,13 @@ def get_host_groups_from_cloud(inventory):
             server_ids = set()
             # Trap for duplicate results
             for server in servers:
-                server_ids.add(server['id'])
+                server_ids.add(server['name'])
             if len(server_ids) == 1 and use_hostnames:
                 append_hostvars(hostvars, groups, name, servers[0])
             else:
                 for server in servers:
                     append_hostvars(
-                        hostvars, groups, server['id'], server,
+                        hostvars, groups, server['name'], server,
                         namegroup=True)
     groups['_meta'] = {'hostvars': hostvars}
     return groups
@@ -223,7 +224,7 @@ def main():
             inventory_args.update(dict(
                 config_key='ansible',
                 config_defaults={
-                    'use_hostnames': True,
+                    'use_hostnames': False,
                     'expand_hostvars': True,
                     'fail_on_errors': True,
                 }

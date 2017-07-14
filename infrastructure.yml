@@ -5,6 +5,7 @@
   gather_facts: no
   vars_files:
     - config.yml
+    - cluster.yml
   tasks:
   - include: create_network_infrastructure.yml
     tags: networks

@@ -20,7 +20,7 @@
     HEADER_Accept: "text/plain"
     HEADER_Accept-Encoding: "&lt;compress | gzip | deflate | identity&gt;"
     HEADER_Accept-Language: "en-US"
-    body: "{{ lookup('file','{{ AMBARI_blueprintfile }}') }}"
+    body: "{{ lookup('template','{{ AMBARI_blueprintfile }}') }}"
     force_basic_auth: yes
     body_format: json
     status_code: 
