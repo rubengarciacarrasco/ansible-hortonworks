@@ -1,6 +1,7 @@
 ---
 - name: Prepare instances
   hosts: all
+  gather_facts: True
   remote_user: cloud-user
   become: true
   tasks:
@@ -9,6 +10,7 @@
 
 - name: Install Ambari Server
   hosts: all
+  gather_facts: true
   remote_user: cloud-user
   become: true
   tags: ambari
@@ -29,11 +31,10 @@
     - role: blueprints
       vars:
       - ACTION: DEPLOY
-      - AMBARI_HOST: '{{ hostvars[groups[ambari][0]].[facter_ec2_metadata].[public-ipv4] }}'
-#      - AMBARI_HOST: 10.95.251.229
+      - AMBARI_HOST: "{{ hostvars[groups['ambari'][0]]['facter_ec2_metadata']['public-ipv4'] }}"
       - AMBARI_USER: admin
       - AMBARI_PASS: admin
-      - AMBARI_blueprintname: DOPG
+      - AMBARI_blueprintname: DSN
       - AMBARI_blueprintfile: blueprint.json.j2
       - AMBARI_clustername: DSN
       - AMBARI_clusterfile: cluster.json.j2
