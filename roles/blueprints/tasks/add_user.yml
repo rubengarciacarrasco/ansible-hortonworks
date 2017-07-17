@@ -1,0 +1,16 @@
+
+- name: Add User {{ new_user }} to Ambari Environment
+  uri: 
+    url: http://{{ AMBARI_HOST }}:8080/api/v1/users
+    method: POST
+    HEADER_X-Requested-By: "ambari"
+    user: '{{ AMBARI_USER }}'
+    password: '{{ AMBARI_PASS }}'
+    HEADER_Content-Type: "application/x-www-form-urlencoded"
+    HEADER_Accept: "text/plain"
+    HEADER_Accept-Encoding: "&lt;compress | gzip | deflate | identity&gt;"
+    HEADER_Accept-Language: "en-US"
+    body: "{{ lookup('template','{{ AMBARI_userfile }}') }}"
+    force_basic_auth: yes
+    body_format: json
+    status_code: 201

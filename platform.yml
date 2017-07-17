@@ -30,7 +30,7 @@
   roles:
     - role: blueprints
       vars:
-      - ACTION: DEPLOY
+      - ACTION: ADD_USER
       - AMBARI_HOST: "{{ hostvars[groups['ambari'][0]]['facter_ec2_metadata']['public-ipv4'] }}"
       - AMBARI_USER: admin
       - AMBARI_PASS: admin
@@ -38,3 +38,8 @@
       - AMBARI_blueprintfile: blueprint.json.j2
       - AMBARI_clustername: DSN
       - AMBARI_clusterfile: cluster.json.j2
+      - AMBARI_userfile: user.json.j2
+      - new_user: "ansible"
+      - new_pass: "ansible"
+      - active_user: yes
+      - user_is_admin: yes

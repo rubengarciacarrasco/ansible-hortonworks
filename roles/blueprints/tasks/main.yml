@@ -1,4 +1,7 @@
 ---
+- include: add_user.yml
+  when: ACTION == "ADD_USER"
+
 - include: other.yml
 
 - include: deploy.yml
@@ -6,3 +9,4 @@
 
 - include: delete.yml
   when: ACTION == "DELETE"
+
